@@ -1,9 +1,6 @@
 package example.hello;
 
 import java.rmi.Naming;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 public class Client {
 
@@ -19,14 +16,21 @@ public class Client {
             //System.out.println("Registry has been located");
             //Hello stub = (Hello) registry.lookup("Hello");
 
-            Hello stub = (Hello) Naming.lookup("rmi://" + host + "/MyHello"); 
+            Saudacao stub = (Saudacao) Naming.lookup("rmi://" + host + "/SaudacaoRemota");
             System.out.println("Found server");
-            String response = stub.sayHello();
+
+            String response = stub.mensagem();
             System.out.println("Response: " + response);
 
-            int result = stub.soma(100,1000);
-            System.out.println("Response from soma: " + result);
+            int result = stub.multiplica(12, 8);
+            System.out.println("Response from multiplica: " + result);
             
+            String ipServer = stub.getServerIP();
+            System.out.println("Server IP: " + ipServer);
+
+            String ipClient = stub.getClientIP();
+            System.out.println("Client IP: " + ipClient);
+
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
